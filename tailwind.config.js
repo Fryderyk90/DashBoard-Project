@@ -7,5 +7,11 @@ export const theme = {
 export const variants = {
   extend: {},
 };
-export const plugins = [];
+export const plugins = [
+  require('@tailwindcss/forms'),
+  require('daisyui'),
+];
+export const daisyui = {
+  themes:["emerald"]
+}
 
