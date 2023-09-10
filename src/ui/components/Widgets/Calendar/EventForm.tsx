@@ -13,15 +13,13 @@ export default function EventForm({ event, onToggle, open }: EventFormProps) {
     return (
         <dialog id="my_modal_1" open={true} className="modal">
             <div className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>                
+                <h3 className="font-bold text-lg">Hello!</h3>
                 {event?.title && <p className='font-bold'>Title:  {event?.title}</p>}
                 <p>Start:  {event?.start?.toDateString()}</p>
                 <p>End:  {event?.end?.toDateString()}</p>
                 <div className="modal-action">
                     <form method="dialog">
-
                         <button onClick={() => onToggle(false)} className="btn">Close</button>
-
                     </form>
                 </div>
             </div>
