@@ -1,14 +1,16 @@
-import { widgetType } from "../MenuDrawer/NavBar"
 
-interface widgetProps {
-    type: widgetType
-    widget: JSX.Element
+
+
+interface WidgetContainerProps {
+    children: React.ReactNode
 }
 
-export default function WidgetContainer(props: widgetProps) {
+const WidgetContainer: React.FC<WidgetContainerProps> = ({ children }) => {
     return (
-        <div key={props.type} className=" bg-base-100 p-4 w-full h-full ">
-            {props.widget}
-        </div>
-    )
-}
+      <div className="border-2 container bg-white p-4">
+        {children}
+      </div>
+    );
+  };
+
+export default WidgetContainer

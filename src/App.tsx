@@ -1,11 +1,13 @@
+import { DashboardContextProvider } from "./Contexts/DashBoardContext"
 import Dashboard from "./ui/templates/Dashboard"
 
-
-
 function App() {
-
   return (
-    <Dashboard />
+    <DashboardContextProvider>      
+      <Dashboard /> 
+    </DashboardContextProvider>
+
+
   )
 }
 
