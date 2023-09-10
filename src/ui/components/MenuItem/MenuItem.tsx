@@ -13,12 +13,12 @@ export default function MenuItem({ icon, text, handleSelection }: MenuItemProps)
         <li>
             <button
                 onClick={() => handleSelection}
-                className={`mb-2 btn btn-block content-center ${isMenuOpen ? 'justify-start' : 'justify-center'}`}>
-                <div className="mt-1">
+                className={`mb-2 btn btn-block ${isMenuOpen ? 'justify-start' : 'justify-center'}`}>
+                <div className={`${isMenuOpen ? 'my-1' : 'mt-3'}`}>
                     {icon}
                 </div>
 
-                <p className="">
+                <p className="normal-case">
                     {text}
                 </p>
             </button>

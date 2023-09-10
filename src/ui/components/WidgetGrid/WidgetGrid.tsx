@@ -6,7 +6,7 @@ export default function WidgetGrid() {
     return (
         <div className={`grid grid-cols-2 w-full p-2 gap-2  bg-base-300`}>
             {selectedWidget === null
-                ? widgets.map(w => w)
+                ? widgets.map((w,i) => <div key={i}>{w}</div>)
                 : widgets.filter(widget => widget.key === selectedWidget)}
         </div>
     )
