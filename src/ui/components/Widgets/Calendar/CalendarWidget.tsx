@@ -1,6 +1,6 @@
 import WidgetContainer from '../../WidgetContainer/WidgetContainer';
 import { useState } from 'react';
-import { Calendar, dayjsLocalizer, Event, View, SlotInfo } from 'react-big-calendar';
+import { Calendar, dayjsLocalizer, Event, SlotInfo } from 'react-big-calendar';
 import dayjs from 'dayjs';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
