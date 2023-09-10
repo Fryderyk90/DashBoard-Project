@@ -7,7 +7,7 @@ export default function Dashboard() {
     //TransportContext
 
     return (
-        <div className='flex'>
+        <div className='flex h-screen'>
             <MenuDrawer />
             <WidgetGrid />
         </div>

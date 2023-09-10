@@ -35,42 +35,44 @@ const CalendarWidget = (props: Omit<CalendarProps, 'localizer'>) => {
     }, []);
     return (
         <WidgetContainer>
-            <div style={{ height: '50vh' }}>
-                {isEventFormOpen && <EventForm
-                    open={isEventFormOpen}
-                    onToggle={updateIsOpen}
-                    event={event}
-                />}
-                <BigCalendar
-                    selectable
-                    onSelectEvent={(event) => {
-                        console.log('selectedEvent', event)
-                        console.log('EventFormOpen', isEventFormOpen)
-                        updateIsOpen(true)
-                        setEvent(event as CustomEvent)
-                        return <EventForm
-                            open={isEventFormOpen}
-                            onToggle={updateIsOpen}
-                            event={event as CustomEvent | undefined}
-                        />
-                    }}
-                    onSelectSlot={(event) => {
-                        console.log('selectedSlot', event)
-                        console.log('EventFormOpen', isEventFormOpen)
-                        updateIsOpen(true)
-                        setEvent({ start: event.start, end: event.end } as CustomEvent)
-                        return <EventForm
-                            open={isEventFormOpen}
-                            onToggle={updateIsOpen}
-                            event={{ start: event.start, end: event.end } as CustomEvent | undefined}
-                        />
-                    }}
-                    localizer={localizer}
-                    events={events}
-                    views={['week', 'month']}
-                    {...props}
-                />
-            </div>
+            {isEventFormOpen && <EventForm
+                open={isEventFormOpen}
+                onToggle={updateIsOpen}
+                event={event as CustomEvent}
+                title={event?.title ? event.title.toString() : 'Create Event'}
+            />}
+            <BigCalendar
+                style={{ height: '437px', maxHeight: '437px' }}
+                selectable
+                onSelectEvent={(event) => {
+                    console.log('selectedEvent', event)
+                    console.log('EventFormOpen', isEventFormOpen)
+                    updateIsOpen(true)
+                    setEvent(event as CustomEvent)
+                    return <EventForm
+                        open={isEventFormOpen}
+                        onToggle={updateIsOpen}
+                        event={event as CustomEvent | undefined}
+                        title={event?.title ? event.title.toString() : 'Create Event'}
+                    />
+                }}
+                onSelectSlot={(event) => {
+                    console.log('selectedSlot', event)
+                    console.log('EventFormOpen', isEventFormOpen)
+                    updateIsOpen(true)
+                    setEvent({ start: event.start, end: event.end } as CustomEvent)
+                    return <EventForm
+                        open={isEventFormOpen}
+                        onToggle={updateIsOpen}
+                        event={{ start: event.start, end: event.end } as CustomEvent | undefined}
+                        title={'Create Event'}
+                    />
+                }}
+                localizer={localizer}
+                events={events}
+                views={['week', 'month']}
+                {...props}
+            />
         </WidgetContainer>
     );
 

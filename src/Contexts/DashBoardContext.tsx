@@ -16,6 +16,7 @@ interface DashBoardContextType {
     isMenuOpen: boolean
     HandleSelectedWidget: (widget: WidgetType) => void
     HandleMenu: (args: boolean) => void
+    maxColumns: number
 }
 
 const DashboardContext = createContext<DashBoardContextType | undefined>(undefined);
@@ -23,50 +24,58 @@ const DashboardContext = createContext<DashBoardContextType | undefined>(undefin
 export const DashboardContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
     const [selectedWidget, setSelectedWidget] = useState<WidgetType | null>(null);
-    const HandleSelectedWidget = (widget: WidgetType) => {
-        setSelectedWidget(widget)
+    const [maxColumns, setMaxColumns] = useState<number>(2);
+    function HandleSelectedWidget(widget: WidgetType) {
+        setMaxColumns(widget === 'home' ? 2 : 1)
+        setSelectedWidget(widget === 'home' ? null : widget)
     }
     const HandleMenu = (args: boolean) => {
         setIsMenuOpen(args)
+
     }
     const menuItems = [
         <ul>
             <MenuItem
-                key={"Home"}
+                key={"home"}
                 {...(!isMenuOpen ? {} : { text: "Home" })}
                 icon={<FontAwesomeIcon icon={faHome} />}
+                handleSelection={() => HandleSelectedWidget('home')}
             />
             <MenuItem
-                key={"Weather"}
+                key={"weather"}
                 {...(!isMenuOpen ? {} : { text: "Weather" })}
                 icon={<FontAwesomeIcon icon={faCloud} />}
+                handleSelection={() => HandleSelectedWidget('weather' as WidgetType)}
             />
             <MenuItem
-                key={"Calendar"}
+                key={"calendar"}
                 {...(!isMenuOpen ? {} : { text: "Calendar" })}
                 icon={<FontAwesomeIcon icon={faCalendar} />}
+                handleSelection={() => HandleSelectedWidget('calendar' as WidgetType)}
             />
             <MenuItem
-                key={"Todos"}
+                key={"todo"}
                 {...(!isMenuOpen ? {} : { text: "Todos" })}
                 icon={<FontAwesomeIcon icon={faListAlt} />}
+                handleSelection={() => HandleSelectedWidget('todo' as WidgetType)}
             />
             <MenuItem
-                key={"Transport"}
+                key={"transport"}
                 {...(!isMenuOpen ? {} : { text: "Transport" })}
                 icon={<FontAwesomeIcon icon={faSubway} />}
+                handleSelection={() => HandleSelectedWidget('transport' as WidgetType)}
             />
         </ul>
     ]
     const widgets: Array<JSX.Element> = [
-        <WeatherWidget />,
-        <CalendarContextProvider>
+        <WeatherWidget key={'weather' as WidgetType} />,
+        <CalendarContextProvider key={'calendar' as WidgetType}>
 
             <CalendarWidget />
         </CalendarContextProvider>
         ,
-        <TodoWidget />,
-        <TransportWidget />,
+        <TodoWidget key={'todo' as WidgetType} />,
+        <TransportWidget key={'transport' as WidgetType} />,
     ]
 
 
@@ -78,7 +87,8 @@ export const DashboardContextProvider: React.FC<{ children: ReactNode }> = ({ ch
                 selectedWidget,
                 HandleSelectedWidget,
                 isMenuOpen,
-                HandleMenu
+                HandleMenu,
+                maxColumns
             }}>
             {children}
         </DashboardContext.Provider>

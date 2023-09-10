@@ -1,14 +1,16 @@
 import { useDashboardContext } from "../../../Contexts/DashBoardContext"
+import { WidgetType } from "../../../types";
 
 
 interface MenuItemProps {
     icon: JSX.Element
     text?: string | undefined
-    handleSelection?: () => string
+    handleSelection?: (widget: WidgetType) => void
 }
 
 export default function MenuItem({ icon, text, handleSelection }: MenuItemProps) {
     const { isMenuOpen } = useDashboardContext();
+    
     return (
         <li>
             <button
