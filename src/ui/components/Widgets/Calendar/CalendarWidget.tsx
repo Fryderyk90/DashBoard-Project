@@ -1,9 +1,4 @@
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import WidgetContainer from '../../WidgetContainer/WidgetContainer';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import React from 'react'
 import { useState } from 'react';
 import { Calendar, dayjsLocalizer, Event, View, SlotInfo } from 'react-big-calendar';
 import dayjs from 'dayjs';

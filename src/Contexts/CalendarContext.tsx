@@ -20,7 +20,7 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
         { title: 'Event 2', date: '2023-09-07', color: 'blue' },
         { title: 'Event 3', date: '2023-09-15', color: 'green' }
     ];
-    const [events, setEvents] = useState<Array<CalendarEvent>>(TestEvents)
+    const [events] = useState<Array<CalendarEvent>>(TestEvents)
     
     return (
         <CalendarContext.Provider value={
