@@ -1,76 +1,89 @@
 import WidgetContainer from '../../WidgetContainer/WidgetContainer';
-import { Calendar as BigCalendar, CalendarProps, momentLocalizer } from 'react-big-calendar';
+import { Calendar as BigCalendar, CalendarProps, momentLocalizer, Event, SlotInfo } from 'react-big-calendar';
 import moment from 'moment';
 import EventForm from './EventForm';
-import { useCallback, useState } from 'react';
-
-type person = "Fredrik" | "Susanna"
-type color = "red" | "blue"
-type personColor = {
-    person: person
-    color: color
-}
-export interface CustomEvent extends Event {
-    allDay?: boolean | undefined;
-    title?: React.ReactNode | undefined;
-    start?: Date | undefined;
-    end?: Date | undefined;
-    resource?: any;
-    personColor?: personColor
-}
-
-const events = [
-    {
-        start: moment('2023-09-10T10:00:00').toDate(),
-        end: moment('2023-09-13T10:00:00').toDate(),
-        title: 'TEST EVENT',
-    }
-]
+import { useCallback, useMemo, useState } from 'react';
+import { CustomEvent, person, personColor } from '../../../../types';
 const localizer = momentLocalizer(moment)
-const CalendarWidget = (props: Omit<CalendarProps, 'localizer'>) => {
+
+
+
+const CalendarWidget = (props: Omit<CalendarProps<CustomEvent>, 'localizer'>) => {
+    const [events, setEvents] = useState<Array<CustomEvent>>([
+        {
+            title: 'Event 1',
+            start: new Date(2023, 9, 1, 10, 0), // October 1, 2023, 10:00 AM
+            end: new Date(2023, 9, 1, 12, 0), // October 1, 2023, 12:00 PM
+            description: 'This is a test description',
+            user: { name: 'Fredrik' },
+            style: { backgroundColor: 'blue' },
+            allDay: false,
+        },
+        {
+            title: 'Event 2',
+            start: new Date(2023, 9, 2, 14, 0), // October 2, 2023, 2:00 PM
+            end: new Date(2023, 9, 5, 16, 0), // October 2, 2023, 4:00 PM
+            description: 'This is a test description',
+            user: { name: 'Fredrik' },
+            allDay: true,
+            style: { backgroundColor: 'blue' }
+
+        },
+        {
+            title: 'Event 3',
+            start: new Date(2023, 9, 3, 9, 0), // October 3, 2023, 9:00 AM
+            end: new Date(2023, 9, 3, 11, 0), // Otober 3, 2023, 11:00 AM
+            description: 'This is a test description',
+            user: { name: 'Susanna' },
+            style: { backgroundColor: 'red' },
+            allDay: false,
+        }
+    ]);
+    const [selectedEvent, setSelectedEvent] = useState<CustomEvent>();
+    const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null);
     const [isEventFormOpen, setIsEventFormOpen] = useState<boolean>(false)
-    const [event, setEvent] = useState<CustomEvent | undefined>(undefined)
     const updateIsOpen = useCallback((status: boolean) => {
         setIsEventFormOpen(status);
     }, []);
+
+    const handleSelectSlot = (slotInfo: SlotInfo) => {
+        setSelectedSlot(slotInfo);
+        setIsEventFormOpen(true);
+    };
+
+    const handleEvent = (eventInfo: CustomEvent) => {
+        setSelectedEvent(eventInfo);
+        setIsEventFormOpen(true);
+    };
+    const eventStyleGetter = (event: CustomEvent) => {
+        const backgroundColor = event.style?.backgroundColor;
+        return {
+            style: {
+                backgroundColor,
+            }
+        };
+    };
     return (
         <WidgetContainer>
-            {isEventFormOpen && <EventForm
-                open={isEventFormOpen}
-                onToggle={updateIsOpen}
-                event={event as CustomEvent}
-                title={event?.title ? event.title.toString() : 'Create Event'}
-            />}
+            {isEventFormOpen &&
+                <EventForm
+                    open={isEventFormOpen as boolean}
+                    onToggle={updateIsOpen}
+                    event={selectedEvent}
+                    title={selectedEvent ? 'Edit event' : 'Create Event'}
+                    selectedSlot={selectedSlot}
+
+                />}
             <BigCalendar
+
                 style={{ height: '437px', maxHeight: '437px' }}
                 selectable
-                onSelectEvent={(event) => {
-                    console.log('selectedEvent', event)
-                    console.log('EventFormOpen', isEventFormOpen)
-                    updateIsOpen(true)
-                    setEvent(event as CustomEvent)
-                    return <EventForm
-                        open={isEventFormOpen}
-                        onToggle={updateIsOpen}
-                        event={event as CustomEvent | undefined}
-                        title={event?.title ? event.title.toString() : 'Create Event'}
-                    />
-                }}
-                onSelectSlot={(event) => {
-                    console.log('selectedSlot', event)
-                    console.log('EventFormOpen', isEventFormOpen)
-                    updateIsOpen(true)
-                    setEvent({ start: event.start, end: event.end } as CustomEvent)
-                    return <EventForm
-                        open={isEventFormOpen}
-                        onToggle={updateIsOpen}
-                        event={{ start: event.start, end: event.end } as CustomEvent | undefined}
-                        title={'Create Event'}
-                    />
-                }}
+                onSelectEvent={handleEvent}
+                onSelectSlot={handleSelectSlot}
                 localizer={localizer}
                 events={events}
                 views={['week', 'month']}
+                eventPropGetter={eventStyleGetter}
                 {...props}
             />
         </WidgetContainer>

@@ -1,0 +1,15 @@
+.rbc-event{
+    height: 22px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;    
+}
+
+.rbc-event .event-blue{
+    background-color: #007bff !important;
+}
+
+.rbc-event .event-red{
+    background-color: #dc3545 !important;
+}
+
+
