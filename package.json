@@ -6,6 +6,7 @@
   "homepage": "https://fryderyk90.github.io/DashBoard-Project/",
   "scripts": {
     "dev": "vite",
+    "test": "vitest",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "tsc && vite build",
@@ -16,12 +17,8 @@
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@fullcalendar/core": "^6.1.8",
-    "@fullcalendar/daygrid": "^6.1.8",
-    "@fullcalendar/interaction": "^6.1.8",
-    "@fullcalendar/react": "^6.1.8",
-    "@fullcalendar/timegrid": "^6.1.8",
     "@tailwindcss/forms": "^0.5.4",
+    "@tanstack/react-query": "^5.17.15",
     "autoprefixer": "^10.4.14",
     "daisyui": "^3.2.1",
     "dayjs": "^1.11.9",
@@ -29,7 +26,6 @@
     "postcss": "^8.4.26",
     "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
-    "react-big-calendar": "^1.8.2",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "settings": "^0.1.1",
@@ -37,7 +33,6 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
-    "@types/react-big-calendar": "^1.6.4",
     "@types/react-dom": "^18.2.6",
     "@types/react-modal": "^3.16.0",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
@@ -48,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.4.1",
     "gh-pages": "^6.0.0",
     "typescript": "^5.0.2",
-    "vite": "^4.4.0"
+    "vite": "^4.4.0",
+    "vitest": "^1.2.1"
   }
 }

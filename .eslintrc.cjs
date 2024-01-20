@@ -22,6 +22,7 @@ module.exports = {
   
   plugins: ['react-refresh'],
   rules: {
+    "@typescript-eslint/no-unsafe-call": "error",
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
